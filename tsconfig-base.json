@@ -2,10 +2,12 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "module": "es6",
+    "moduleResolution": "node",
     "target": "es5",
     "jsx": "react",
     "strict": true,
     "allowJs": true,
-    "composite": true
+    "composite": true,
+    "allowSyntheticDefaultImports": true
   }
 }
