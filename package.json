@@ -5,20 +5,22 @@
   "main": "src/server/index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "npm run build && node src/server/index.js",
+    "start": "node --inspect=5858 -r ts-node/register ./src/server/index.ts",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "server": "nodemon src/server/index.js",
+    "server": "nodemon",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "jest"
   },
   "dependencies": {
+    "@types/node": "^14.11.10",
     "@types/react-dom": "^16.9.8",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.5.0",
     "express": "^4.16.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "styled-components": "^3.3.3"
+    "styled-components": "^3.3.3",
+    "ts-node": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
