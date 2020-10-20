@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import useSWR from "swr";
-import { ItemsResponse } from "../shared/api";
+import { Item, ItemsResponse } from "../shared/api";
 import "./App.css";
 
 export const App = () => {
   const { data, error } = useSWR<ItemsResponse>("/api/items");
+  const [menu, setMenu] = useState<Item[]>([]);
 
   if (error) {
     return <>An error occurred!</>;
   } else if (!data) {
     return <>Loading...</>;
   }
+
+  const addItem = (item: Item) => {
+    const newMenu = menu.slice();
+    newMenu.push(item);
+
+    setMenu(newMenu);
+  };
+
+  const removeItem = (index: number) => {
+    const newMenu = menu.slice();
+    newMenu.splice(index, 1);
+
+    setMenu(newMenu);
+  };
 
   const { items } = data;
 
@@ -54,7 +69,7 @@ export const App = () => {
             </div>
             <ul className="item-picker">
               {items.map((item) => (
-                <li className="item">
+                <li className="item clickable" onClick={() => addItem(item)}>
                   <h2>{item.name}</h2>
                   <p>
                     {item.dietaries.map((dietarie) => (
@@ -68,42 +83,22 @@ export const App = () => {
           <div className="col-8">
             <h2>Menu preview</h2>
             <ul className="menu-preview">
-              <li className="item">
-                <h2>Dummy item</h2>
-                <p>
-                  <span className="dietary">ve</span>
-                  <span className="dietary">v</span>
-                  <span className="dietary">n!</span>
-                </p>
-                <button className="remove-item">x</button>
-              </li>
-              <li className="item">
-                <h2>Dummy item</h2>
-                <p>
-                  <span className="dietary">ve</span>
-                  <span className="dietary">v</span>
-                  <span className="dietary">n!</span>
-                </p>
-                <button className="remove-item">x</button>
-              </li>
-              <li className="item">
-                <h2>Dummy item</h2>
-                <p>
-                  <span className="dietary">ve</span>
-                  <span className="dietary">v</span>
-                  <span className="dietary">n!</span>
-                </p>
-                <button className="remove-item">x</button>
-              </li>
-              <li className="item">
-                <h2>Dummy item</h2>
-                <p>
-                  <span className="dietary">ve</span>
-                  <span className="dietary">v</span>
-                  <span className="dietary">n!</span>
-                </p>
-                <button className="remove-item">x</button>
-              </li>
+              {menu.map((item, index) => (
+                <li className="item">
+                  <h2>{item.name}</h2>
+                  <p>
+                    {item.dietaries.map((dietarie) => (
+                      <span className="dietary">{dietarie}</span>
+                    ))}
+                  </p>
+                  <button
+                    onClick={() => removeItem(index)}
+                    className="remove-item"
+                  >
+                    x
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
