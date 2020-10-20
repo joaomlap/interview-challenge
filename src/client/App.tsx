@@ -1,17 +1,12 @@
 import React, { useState } from "react";
-import useSWR from "swr";
-import { Item, ItemsResponse } from "../shared/api";
+import { Item } from "../shared/api";
 import "./App.css";
+import { Menu } from "./Menu";
+import { MenuPreview } from "./MenuPreview";
+import { MenuSummary } from "./MenuSummary";
 
 export const App = () => {
-  const { data, error } = useSWR<ItemsResponse>("/api/items");
   const [menu, setMenu] = useState<Item[]>([]);
-
-  if (error) {
-    return <>An error occurred!</>;
-  } else if (!data) {
-    return <>Loading...</>;
-  }
 
   const addItem = (item: Item) => {
     const newMenu = menu.slice();
@@ -27,80 +22,13 @@ export const App = () => {
     setMenu(newMenu);
   };
 
-  const { items } = data;
-
-  const dietarieSums = items.reduce((acc: Record<string, number>, curr) => {
-    curr.dietaries.forEach((d) => {
-      if (!acc[d]) {
-        acc[d] = 1;
-      } else {
-        acc[d] += 1;
-      }
-    });
-
-    return acc;
-  }, {});
-
-  console.log(dietarieSums);
-
   return (
     <div className="wrapper">
-      <div className="menu-summary">
-        <div className="container">
-          <div className="row">
-            <div className="col-6 menu-summary-left">
-              <span>{items.length} items</span>
-            </div>
-            <div className="col-6 menu-summary-right">
-              {Object.keys(dietarieSums).map((key) => (
-                <>
-                  {dietarieSums[key]}x <span className="dietary">{key}</span>
-                </>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      <MenuSummary items={menu} />
       <div className="container menu-builder">
         <div className="row">
-          <div className="col-4">
-            <div className="filters">
-              <input className="form-control" placeholder="Name" />
-            </div>
-            <ul className="item-picker">
-              {items.map((item) => (
-                <li className="item clickable" onClick={() => addItem(item)}>
-                  <h2>{item.name}</h2>
-                  <p>
-                    {item.dietaries.map((dietarie) => (
-                      <span className="dietary">{dietarie}</span>
-                    ))}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="col-8">
-            <h2>Menu preview</h2>
-            <ul className="menu-preview">
-              {menu.map((item, index) => (
-                <li className="item">
-                  <h2>{item.name}</h2>
-                  <p>
-                    {item.dietaries.map((dietarie) => (
-                      <span className="dietary">{dietarie}</span>
-                    ))}
-                  </p>
-                  <button
-                    onClick={() => removeItem(index)}
-                    className="remove-item"
-                  >
-                    x
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Menu addItem={addItem} />
+          <MenuPreview selectedItems={menu} removeItem={removeItem} />
         </div>
       </div>
     </div>
