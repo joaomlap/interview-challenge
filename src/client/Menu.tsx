@@ -49,11 +49,17 @@ const MenuList = ({ search, addItem }: MenuListProps) => {
     const { items } = data;
 
     itemsResult = items.map((item) => (
-      <li className="item clickable" onClick={() => addItem(item)}>
+      <li
+        key={`menu-list-${item.id}`}
+        className="item clickable"
+        onClick={() => addItem(item)}
+      >
         <h2>{item.name}</h2>
         <p>
           {item.dietaries.map((dietarie) => (
-            <span className="dietary">{dietarie}</span>
+            <span key={`menu-list-d-${dietarie}`} className="dietary">
+              {dietarie}
+            </span>
           ))}
         </p>
       </li>
