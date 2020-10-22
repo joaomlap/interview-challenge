@@ -1,23 +1,32 @@
-# Feedr Technical Challenge
+# Technical Challenge
 
-Thank you for taking the time to attempt this challenge.
+This is my solution to the proposed technical challenge.
 
-These tests are used to evaluate candidates of all skill levels so please complete them to a level you feel is an accurate representation of your skill set.
+I started by making a conversion of the repo to Typescript. The reason why I did this is related to one of the bullpoints in the challenge definition - structured approach to typing.
 
-Please read `README-FRONTEND.md` for further instructions.
+I preferred to use Typescript types instead of PropTypes as it takes advantage of Typescript compilation to make sure everything is in order before runtime.
 
-If you have any questions or would like to clarify any details, please email lyz@feedr.co.
+On top of that it was a simple approach - logic only, no CSS added.
 
-Good luck!
+On the server I added the ability of searching with the help of a simple RegEx.
+On the client I divided the application in 3 different components, Menu, MenuSummary and MenuPreview.
+
+Menu: Where the request to the server happens and where I display the items available.
+MenuSummary: When items are selected it displays how many items are selected and the corresponding data about dietaries.
+MenuPreview: Shows the options selected with the ability of removing.
 
 # Quick Start
+
 Fork the repository, clone it to your local system, then:
 
 ## Install dependencies
+
 yarn (or npm install)
 
 ## Start development server
+
 yarn dev (or npm run dev)
 
 ## Run tests
+
 yarn test (or npm run test)
