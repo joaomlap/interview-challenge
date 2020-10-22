@@ -27,9 +27,9 @@ export const MenuSummary = ({ items }: MenuSummaryProps) => {
           </div>
           <div className="col-6 menu-summary-right">
             {Object.keys(dietarieSums).map((key) => (
-              <>
+              <span key={key}>
                 {dietarieSums[key]}x <span className="dietary">{key}</span>
-              </>
+              </span>
             ))}
           </div>
         </div>
