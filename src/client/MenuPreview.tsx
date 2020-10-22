@@ -15,11 +15,13 @@ export const MenuPreview = ({
       <h2>Menu preview</h2>
       <ul className="menu-preview">
         {selectedItems.map((item, index) => (
-          <li className="item">
+          <li className="item" key={item.id}>
             <h2>{item.name}</h2>
             <p>
               {item.dietaries.map((dietarie) => (
-                <span className="dietary">{dietarie}</span>
+                <span key={`dietary-${dietarie}`} className="dietary">
+                  {dietarie}
+                </span>
               ))}
             </p>
             <button onClick={() => removeItem(index)} className="remove-item">
