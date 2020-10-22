@@ -1,7 +1,7 @@
 import express from "express";
 import { items } from "./items";
 
-const app = express();
+export const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(express.static("dist"));
@@ -12,11 +12,12 @@ app.get("/api/items", (req: express.Request, res: express.Response) => {
 
   if (search && typeof search === "string") {
     const regex = new RegExp(`.*${search.toLowerCase()}.*`);
-    console.log(regex);
     result = items.filter((item) => regex.test(item.name.toLowerCase()));
   }
 
   res.send({ items: result });
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}!`));
+export const appInstance = app.listen(port, () =>
+  console.log(`Listening on port ${port}!`)
+);
