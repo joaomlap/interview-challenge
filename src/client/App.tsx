@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Item } from "../shared/api";
-import "./App.css";
 import { Menu } from "./Menu";
 import { MenuPreview } from "./MenuPreview";
 import { MenuSummary } from "./MenuSummary";
+import "./App.css";
 
 export const App = () => {
   const [menu, setMenu] = useState<Item[]>([]);
