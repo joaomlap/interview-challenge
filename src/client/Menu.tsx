@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useSWR from "swr";
+import useDebounce from "use-debounce/lib/useDebounce";
 import { Item, ItemsResponse } from "../shared/api";
-import { useDebounce } from "./helpers/debounce";
 
 type MenuProps = {
   addItem: (item: Item) => void;
@@ -35,7 +35,7 @@ type MenuListProps = {
 };
 
 const MenuList = ({ search, addItem }: MenuListProps) => {
-  const debouncedSearch = useDebounce(search, 400);
+  const [debouncedSearch] = useDebounce(search, 400);
   const { data, error } = useSWR<ItemsResponse>(
     debouncedSearch ? `/api/items?search=${debouncedSearch}` : "/api/items"
   );
